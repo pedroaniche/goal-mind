@@ -2,41 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\CategoryFormRequest;
 use App\Models\Category;
+use App\Models\Goal;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $categories = Category::query()->orderBy('name')->get();
-
-        return view('categories.index')->with('categories', $categories);
+        $categories = Category::all();
+        $message = session('message.success');
+        return view('categories.index')->with('categories', $categories)->with('message', $message);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(CategoryFormRequest $request)
     {
-        $name = $request->input('name');
-        $category = new Category();
-        $category->name = $name;
-        $category->save();
-        
-        return redirect('/categories');
+        $category = Category::create($request->all());
+        $goals = [];
+        for ($i = 1; $i <= $request->goalName; $i++) {
+            $goals[] = [
+                'category_id' => $category->id,
+                'number' => $i
+            ];
+        }
+        Goal::insert($goals);
+
+        $tasks = [];
+        foreach ($category->goals as $goal) {
+            for ($j = 1; $j <= $request->taskName; $j++) {
+                $tasks[] = [
+                    'goal_id' => $goal->id,
+                    'number' => $j
+                ];
+            }
+        }
+        Task::insert($tasks);
+
+        return to_route('categories.index')
+            ->with('message.success', "Categoria '{$category->name}' adicionada com sucesso!");
     }
 
     /**
@@ -47,27 +58,24 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Category $category)
     {
-        //
+        dd($category->goals);
+        return view('categories.edit')->with('category', $category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Category $category, CategoryFormRequest $request)
     {
-        //
+        $category->fill($request->all());
+        $category->save();
+        return to_route('categories.index')
+            ->with('message.success', "Categoria '{$category->name}' atualizada com sucesso!");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Category $category, Request $request)
     {
-        //
+        $category->delete();
+        return to_route('categories.index')
+            ->with('message.success', "Categoria '{$category->name}' removida com sucesso!");
     }
 }

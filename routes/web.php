@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GoalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('categories.index');
+    return to_route('categories.index');
 });
 
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/categories/create', [CategoryController::class, 'create']);
-Route::post('/categories/store', [CategoryController::class, 'store']);
+Route::resource('/categories', CategoryController::class);
+
+Route::get('/categories/{category}/goals', [GoalController::class, 'index'])->name('goals.index');
