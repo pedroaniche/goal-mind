@@ -20,5 +20,4 @@ Route::get('/', function () {
 });
 
 Route::resource('/categories', CategoryController::class);
-
-Route::get('/categories/{category}/goals', [GoalController::class, 'index'])->name('goals.index');
+Route::resource('/categories/{category}/goals', GoalController::class);

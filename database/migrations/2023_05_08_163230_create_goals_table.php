@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('goals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('number');
+            $table->string('name', 128);
             $table->foreignID('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

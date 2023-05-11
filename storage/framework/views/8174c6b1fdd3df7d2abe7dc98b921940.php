@@ -7,8 +7,6 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['title' => 'Categorias']); ?>
-    <a href="<?php echo e(route('categories.create')); ?>" class="btn btn-dark mb-2">Adicionar</a>
-
     <?php if(isset($message)): ?>
         <div class="alert alert-success">
             <?php echo e($message); ?>
@@ -16,30 +14,43 @@
         </div>
     <?php endif; ?>
 
-    <ul class="list-group">
+    <ul class="list-unstyled border-box" role="list">
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="<?php echo e(route('goals.index', $category->id)); ?>">
-                    <?php echo e($category->name); ?>
+            <?php if($loop->first || $loop->iteration % 5 === 1): ?>
+                <div class="row mt-3 d-flex justify-content-center flex-wrap flex-row-reverse" role="group">
+            <?php endif; ?>
 
-                </a>
+            <div class="col-md-2 mb-3" role="listitem">
+                <li class="border rounded p-3 text-center col-md-12 border-box">
 
-                <span class="d-flex">
-                    <a href="<?php echo e(route('categories.edit', $category->id)); ?>" class="btn btn-primary btn-sm">
-                        E
+                    <a href="<?php echo e(route('categories.show', $category->id)); ?>" class="text-decoration-none text-dark">
+                        <?php echo e($category->name); ?>
+
                     </a>
 
-                    <form action="<?php echo e(route('categories.destroy', $category->id)); ?>" method="POST" class="ms-2">
-                        <?php echo csrf_field(); ?>
-                        <?php echo method_field('DELETE'); ?>
-                        <button class="btn btn-danger btn-sm">
-                            X
-                        </button>
-                    </form>
-                </span>
-            </li>
+                    <div class="d-flex justify-content-between mt-5">
+                        <a href="<?php echo e(route('categories.edit', $category->id)); ?>" class="btn btn-primary btn-sm">
+                            E
+                        </a>
+
+                        <form action="<?php echo e(route('categories.destroy', $category->id)); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
+                            <button class="btn btn-danger btn-sm">
+                                X
+                            </button>
+                        </form>
+                    </div>
+                </li>
+            </div>
+
+            <?php if($loop->iteration % 5 === 0 || $loop->last): ?>
+                </div>
+            <?php endif; ?>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </ul>
+
+    <a href="<?php echo e(route('categories.create')); ?>" class="btn btn-dark mt-5">Adicionar</a>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginal71c6471fa76ce19017edc287b6f4508c)): ?>

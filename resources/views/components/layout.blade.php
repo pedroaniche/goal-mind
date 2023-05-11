@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>{{ $title }}</h1>
+    <div class="container border-box">
+        <h1 class="mb-5">{{ $title }}</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">

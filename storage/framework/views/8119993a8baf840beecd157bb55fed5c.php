@@ -47,4 +47,4 @@
 <?php $component = $__componentOriginal71c6471fa76ce19017edc287b6f4508c; ?>
 <?php unset($__componentOriginal71c6471fa76ce19017edc287b6f4508c); ?>
 <?php endif; ?>
-<?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/goals/index.blade.php ENDPATH**/ ?>
+<?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/categories/show.blade.php ENDPATH**/ ?>

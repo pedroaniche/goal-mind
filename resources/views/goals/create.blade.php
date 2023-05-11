@@ -1,5 +1,5 @@
-<x-layout title="Nova Categoria">
-    <form action="{{ route('categories.store') }}" method="POST">
+<x-layout title="Nova Objetivo">
+    <form action="{{ route('categories/{id}/goals.create', $category->id) }}" method="POST">
         @csrf
 
         <div class="mb-3">

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('number');
+            $table->string('name', 128);
             $table->foreignID('goal_id')->constrained()->onDelete('cascade');
         });
     }

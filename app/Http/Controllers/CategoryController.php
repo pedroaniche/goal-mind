@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryFormRequest;
 use App\Models\Category;
 use App\Models\Goal;
-use App\Models\Task;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -25,54 +23,45 @@ class CategoryController extends Controller
 
     public function store(CategoryFormRequest $request)
     {
-        $category = Category::create($request->all());
-        $goals = [];
-        for ($i = 1; $i <= $request->goalName; $i++) {
-            $goals[] = [
+        $data = $request->all();
+        $category = Category::create($data);
+        $goals = $data['goals'];
+        $content = [];
+        $now = now();
+
+        foreach ($goals as $goal) {
+            $content[] = [
                 'category_id' => $category->id,
-                'number' => $i
+                'name' => $goal,
+                'created_at' => $now,
+                'updated_at' => $now
             ];
         }
-        Goal::insert($goals);
-
-        $tasks = [];
-        foreach ($category->goals as $goal) {
-            for ($j = 1; $j <= $request->taskName; $j++) {
-                $tasks[] = [
-                    'goal_id' => $goal->id,
-                    'number' => $j
-                ];
-            }
-        }
-        Task::insert($tasks);
+        Goal::insert($content);
 
         return to_route('categories.index')
             ->with('message.success', "Categoria '{$category->name}' adicionada com sucesso!");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show()
     {
-        //
+        return to_route('categories/{category}/goals.index');
     }
 
     public function edit(Category $category)
     {
-        dd($category->goals);
         return view('categories.edit')->with('category', $category);
     }
 
-    public function update(Category $category, CategoryFormRequest $request)
+    public function update(Category $category, CategoryFormRequest $requestasd)
     {
-        $category->fill($request->all());
+        $category->fill($requestasd->all());
         $category->save();
         return to_route('categories.index')
             ->with('message.success', "Categoria '{$category->name}' atualizada com sucesso!");
     }
 
-    public function destroy(Category $category, Request $request)
+    public function destroy(Category $category)
     {
         $category->delete();
         return to_route('categories.index')

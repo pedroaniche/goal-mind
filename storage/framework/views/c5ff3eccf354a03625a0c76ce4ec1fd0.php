@@ -1,13 +1,13 @@
 <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layout','data' => ['title' => 'Nova Categoria']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layout','data' => ['title' => 'Nova Objetivo']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('layout'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['title' => 'Nova Categoria']); ?>
-    <form action="<?php echo e(route('categories.store')); ?>" method="POST">
+<?php $component->withAttributes(['title' => 'Nova Objetivo']); ?>
+    <form action="" method="POST">
         <?php echo csrf_field(); ?>
 
         <div class="mb-3">
@@ -47,5 +47,4 @@
         input.setAttribute('name', 'goals[]');
         objectives.appendChild(input);
     }
-</script>
-<?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/categories/create.blade.php ENDPATH**/ ?>
+</script><?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/goals/create.blade.php ENDPATH**/ ?>

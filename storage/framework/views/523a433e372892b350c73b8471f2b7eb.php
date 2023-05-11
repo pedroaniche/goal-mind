@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1><?php echo e($title); ?></h1>
+    <div class="container border-box">
+        <h1 class="mb-5"><?php echo e($title); ?></h1>
 
         <?php if($errors->any()): ?>
             <div class="alert alert-danger">
