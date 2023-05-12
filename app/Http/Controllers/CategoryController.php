@@ -23,8 +23,11 @@ class CategoryController extends Controller
 
     public function store(CategoryFormRequest $request)
     {
+        // $request->validate('name');
+
         $data = $request->all();
         $category = Category::create($data);
+        // dd($category);
         $goals = $data['goals'];
         $content = [];
         $now = now();
@@ -39,23 +42,24 @@ class CategoryController extends Controller
         }
         Goal::insert($content);
 
+
         return to_route('categories.index')
             ->with('message.success', "Categoria '{$category->name}' adicionada com sucesso!");
     }
 
-    public function show()
+    /* public function show()
     {
-        return to_route('categories/{category}/goals.index');
-    }
+        return view();
+    } */
 
     public function edit(Category $category)
     {
         return view('categories.edit')->with('category', $category);
     }
 
-    public function update(Category $category, CategoryFormRequest $requestasd)
+    public function update(Category $category,  CategoryFormRequest $request)
     {
-        $category->fill($requestasd->all());
+        $category->fill($request->all());
         $category->save();
         return to_route('categories.index')
             ->with('message.success', "Categoria '{$category->name}' atualizada com sucesso!");

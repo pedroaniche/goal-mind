@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('name', 128);
+            $table->boolean('checked', false);
             $table->foreignID('goal_id')->constrained()->onDelete('cascade');
         });
     }

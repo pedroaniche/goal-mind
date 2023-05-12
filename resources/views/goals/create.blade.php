@@ -1,5 +1,5 @@
-<x-layout title="Nova Objetivo">
-    <form action="{{ route('categories/{id}/goals.create', $category->id) }}" method="POST">
+<x-layout title="Novo Objetivo">
+    <form action="{{ route('categories.goals.store', $category->id) }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -8,30 +8,34 @@
                 <input type="text" autofocus id="name" name="name" class="form-control" value="{{ old('name') }}">
             </div>
 
-            <div class="mb-3" id="objectives">
-                <label for="goal" class="form-label">Objetivos:</label>
-                @if(old('goals'))
-                    @foreach(old('goals') as $goal)
-                        <input type="text" class="form-control mb-2" name="goals[]" value="{{ $goal }}">
+            <div class="mb-3" id="tasks">
+                <label for="task" class="form-label">Tarefas:</label>
+                @if(old('tasks'))
+                    @foreach(old('tasks') as $task)
+                        <input type="text" class="form-control mb-2" name="tasks[]" value="{{ $task }}">
                     @endforeach
                 @else
-                    <input type="text" class="form-control mb-2" name="goals[]">
+                    <input type="text" class="form-control mb-2" name="tasks[]">
                 @endif
             </div>
-            <button type="button" class="btn btn-primary mb-3" onclick="addObjective()">Adicionar objetivo</button>
+            <button type="button" class="btn btn-primary mb-3" onclick="addTask()">Adicionar tarefa</button>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-5">Adicionar</button>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="{{ route('categories.goals.index', $category->id) }}" class="btn btn-secondary mt-5">&#x2190; Voltar</a>
+            <button type="submit" class="btn btn-primary mt-5">Salvar</button>
+        </div>
     </form>
 </x-layout>
 
 <script>
-    function addObjective() {
-        const objectives = document.querySelector('#objectives');
+    function addTask() {
+        const tasks = document.querySelector('#tasks');
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
         input.setAttribute('class', 'form-control mb-2');
-        input.setAttribute('name', 'goals[]');
-        objectives.appendChild(input);
+        input.setAttribute('name', 'tasks[]');
+        tasks.appendChild(input);
+        console.log(tasks);
     }
 </script>

@@ -6,9 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CategoryFormRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -30,7 +27,7 @@ class CategoryFormRequest extends FormRequest
     {
         return [
             'name.required' => 'O campo nome é obrigatório',
-            'name.min' => 'O camapo nome precisa de pelo menos :min caracteres'
+            'name.min' => 'O campo nome precisa de pelo menos :min caracteres'
         ];
     }
 }

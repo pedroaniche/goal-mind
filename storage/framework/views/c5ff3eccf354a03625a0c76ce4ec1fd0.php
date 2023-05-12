@@ -1,13 +1,13 @@
 <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layout','data' => ['title' => 'Nova Objetivo']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layout','data' => ['title' => 'Novo Objetivo']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('layout'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['title' => 'Nova Objetivo']); ?>
-    <form action="" method="POST">
+<?php $component->withAttributes(['title' => 'Novo Objetivo']); ?>
+    <form action="<?php echo e(route('categories.goals.store', $category->id)); ?>" method="POST">
         <?php echo csrf_field(); ?>
 
         <div class="mb-3">
@@ -16,20 +16,23 @@
                 <input type="text" autofocus id="name" name="name" class="form-control" value="<?php echo e(old('name')); ?>">
             </div>
 
-            <div class="mb-3" id="objectives">
-                <label for="goal" class="form-label">Objetivos:</label>
-                <?php if(old('goals')): ?>
-                    <?php $__currentLoopData = old('goals'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $goal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <input type="text" class="form-control mb-2" name="goals[]" value="<?php echo e($goal); ?>">
+            <div class="mb-3" id="tasks">
+                <label for="task" class="form-label">Tarefas:</label>
+                <?php if(old('tasks')): ?>
+                    <?php $__currentLoopData = old('tasks'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <input type="text" class="form-control mb-2" name="tasks[]" value="<?php echo e($task); ?>">
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php else: ?>
-                    <input type="text" class="form-control mb-2" name="goals[]">
+                    <input type="text" class="form-control mb-2" name="tasks[]">
                 <?php endif; ?>
             </div>
-            <button type="button" class="btn btn-primary mb-3" onclick="addObjective()">Adicionar objetivo</button>
+            <button type="button" class="btn btn-primary mb-3" onclick="addTask()">Adicionar tarefa</button>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-5">Adicionar</button>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="<?php echo e(route('categories.goals.index', $category->id)); ?>" class="btn btn-secondary mt-5">&#x2190; Voltar</a>
+            <button type="submit" class="btn btn-primary mt-5">Salvar</button>
+        </div>
     </form>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -39,12 +42,13 @@
 <?php endif; ?>
 
 <script>
-    function addObjective() {
-        const objectives = document.querySelector('#objectives');
+    function addTask() {
+        const tasks = document.querySelector('#tasks');
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
         input.setAttribute('class', 'form-control mb-2');
-        input.setAttribute('name', 'goals[]');
-        objectives.appendChild(input);
+        input.setAttribute('name', 'tasks[]');
+        tasks.appendChild(input);
+        console.log(tasks);
     }
 </script><?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/goals/create.blade.php ENDPATH**/ ?>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GoalController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,5 +20,8 @@ Route::get('/', function () {
     return to_route('categories.index');
 });
 
-Route::resource('/categories', CategoryController::class);
-Route::resource('/categories/{category}/goals', GoalController::class);
+Route::resources([
+    'categories' => CategoryController::class,
+    'categories.goals' => GoalController::class,
+    'categories.goals.tasks' => TaskController::class
+]);

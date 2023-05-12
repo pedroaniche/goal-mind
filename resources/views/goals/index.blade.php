@@ -1,4 +1,4 @@
-<x-layout title="Categoria {{ $category->name }}">
+<x-layout title="{{ $category->name }}: Objetivos">
     @isset($message)
         <div class="alert alert-success">
             {{ $message }}
@@ -11,11 +11,11 @@
                 {{ $goal->name }}
 
                 <span class="d-flex">
-                    <a href="" class="btn btn-primary btn-sm">
+                    <a href="{{ route('categories.goals.edit', [$category->id, $goal->id]) }}" class="btn btn-primary btn-sm">
                         E
                     </a>
 
-                    <form action="" method="POST" class="ms-2">
+                    <form action="{{ route('categories.goals.destroy', [$category->id, $goal->id]) }}" method="POST" class="ms-2">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm">
@@ -29,6 +29,6 @@
 
     <div class="d-flex justify-content-between align-items-center">
         <a href="{{ route('categories.index') }}" class="btn btn-secondary mt-5">&#x2190; Voltar</a>
-        <a href="{{}}" class="btn btn-dark mt-5">Adicionar</a>
+        <a href="{{ route('categories.goals.create', $category->id) }}" class="btn btn-dark mt-5">Adicionar</a>
     </div>
 </x-layout>

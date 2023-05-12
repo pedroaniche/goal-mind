@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'created_at', 'updated_at'];
+    protected $fillable = ['name'];
     protected $with = ['goals'];
 
     public function goals()
@@ -20,7 +20,7 @@ class Category extends Model
     protected static function booted()
     {
         self::addGlobalScope('ordered', function (Builder $queryBuilder) {
-            $queryBuilder->orderBy('name', 'desc');
+            $queryBuilder->orderBy('name', 'asc');
         });
     }
 }

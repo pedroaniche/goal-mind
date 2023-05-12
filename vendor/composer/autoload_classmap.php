@@ -22,6 +22,7 @@ return array(
     'App\\Http\\Middleware\\ValidateSignature' => $baseDir . '/app/Http/Middleware/ValidateSignature.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\CategoryFormRequest' => $baseDir . '/app/Http/Requests/CategoryFormRequest.php',
+    'App\\Http\\Requests\\GoalFormRequest' => $baseDir . '/app/Http/Requests/GoalFormRequest.php',
     'App\\Models\\Category' => $baseDir . '/app/Models/Category.php',
     'App\\Models\\Goal' => $baseDir . '/app/Models/Goal.php',
     'App\\Models\\Task' => $baseDir . '/app/Models/Task.php',

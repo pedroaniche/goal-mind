@@ -526,6 +526,7 @@ class ComposerStaticInit85a79bbadc66489f456e7cb8b52c93e9
         'App\\Http\\Middleware\\ValidateSignature' => __DIR__ . '/../..' . '/app/Http/Middleware/ValidateSignature.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\CategoryFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/CategoryFormRequest.php',
+        'App\\Http\\Requests\\GoalFormRequest' => __DIR__ . '/../..' . '/app/Http/Requests/GoalFormRequest.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Goal' => __DIR__ . '/../..' . '/app/Models/Goal.php',
         'App\\Models\\Task' => __DIR__ . '/../..' . '/app/Models/Task.php',

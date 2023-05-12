@@ -1,12 +1,12 @@
 <?php if (isset($component)) { $__componentOriginal71c6471fa76ce19017edc287b6f4508c = $component; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layout','data' => ['title' => 'Categoria '.e($category->name).'']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.layout','data' => ['title' => ''.e($category->name).': Objetivos']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('layout'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['title' => 'Categoria '.e($category->name).'']); ?>
+<?php $component->withAttributes(['title' => ''.e($category->name).': Objetivos']); ?>
     <?php if(isset($message)): ?>
         <div class="alert alert-success">
             <?php echo e($message); ?>
@@ -21,11 +21,11 @@
 
 
                 <span class="d-flex">
-                    <a href="" class="btn btn-primary btn-sm">
+                    <a href="<?php echo e(route('categories.goals.edit', [$category->id, $goal->id])); ?>" class="btn btn-primary btn-sm">
                         E
                     </a>
 
-                    <form action="" method="POST" class="ms-2">
+                    <form action="<?php echo e(route('categories.goals.destroy', [$category->id, $goal->id])); ?>" method="POST" class="ms-2">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('DELETE'); ?>
                         <button class="btn btn-danger btn-sm">
@@ -39,7 +39,7 @@
 
     <div class="d-flex justify-content-between align-items-center">
         <a href="<?php echo e(route('categories.index')); ?>" class="btn btn-secondary mt-5">&#x2190; Voltar</a>
-        <a href="{{}}" class="btn btn-dark mt-5">Adicionar</a>
+        <a href="<?php echo e(route('categories.goals.create', $category->id)); ?>" class="btn btn-dark mt-5">Adicionar</a>
     </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>

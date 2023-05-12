@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Goal extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'created_at', 'updated_at', 'category_id'];
+    protected $with = ['tasks'];
 
     public function category()
     {
@@ -16,6 +18,6 @@ class Goal extends Model
 
     public function tasks()
     {
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, 'goal_id');
     }
 }

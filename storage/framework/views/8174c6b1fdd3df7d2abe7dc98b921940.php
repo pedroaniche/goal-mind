@@ -17,13 +17,13 @@
     <ul class="list-unstyled border-box" role="list">
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php if($loop->first || $loop->iteration % 5 === 1): ?>
-                <div class="row mt-3 d-flex justify-content-center flex-wrap flex-row-reverse" role="group">
+                <div class="row mt-3 d-flex flex-wrap width-100 " role="group">
             <?php endif; ?>
 
             <div class="col-md-2 mb-3" role="listitem">
                 <li class="border rounded p-3 text-center col-md-12 border-box">
 
-                    <a href="<?php echo e(route('categories.show', $category->id)); ?>" class="text-decoration-none text-dark">
+                    <a href="<?php echo e(route('categories.goals.index', $category->id)); ?>" class="text-decoration-none text-dark">
                         <?php echo e($category->name); ?>
 
                     </a>
@@ -50,7 +50,9 @@
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </ul>
 
+
     <a href="<?php echo e(route('categories.create')); ?>" class="btn btn-dark mt-5">Adicionar</a>
+
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__componentOriginal71c6471fa76ce19017edc287b6f4508c)): ?>

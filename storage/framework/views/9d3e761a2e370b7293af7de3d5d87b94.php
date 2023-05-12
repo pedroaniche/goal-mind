@@ -16,7 +16,7 @@
                 <input type="text" autofocus id="name" name="name" class="form-control" value="<?php echo e(old('name')); ?>">
             </div>
 
-            <div class="mb-3" id="objectives">
+            <div class="mb-3" id="goals">
                 <label for="goal" class="form-label">Objetivos:</label>
                 <?php if(old('goals')): ?>
                     <?php $__currentLoopData = old('goals'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $goal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -26,10 +26,13 @@
                     <input type="text" class="form-control mb-2" name="goals[]">
                 <?php endif; ?>
             </div>
-            <button type="button" class="btn btn-primary mb-3" onclick="addObjective()">Adicionar objetivo</button>
+            <button type="button" class="btn btn-primary mb-3" onclick="addGoals()">Adicionar objetivo</button>
         </div>
 
-        <button type="submit" class="btn btn-primary mt-5">Adicionar</button>
+        <div class="d-flex justify-content-between align-items-center">
+            <a href="<?php echo e(route('categories.index')); ?>" class="btn btn-secondary mt-5">&#x2190; Voltar</a>
+            <button type="submit" class="btn btn-primary mt-5">Salvar</button>
+        </div>
     </form>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -39,13 +42,13 @@
 <?php endif; ?>
 
 <script>
-    function addObjective() {
-        const objectives = document.querySelector('#objectives');
+    function addGoals() {
+        const goals = document.querySelector('#goals');
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
         input.setAttribute('class', 'form-control mb-2');
         input.setAttribute('name', 'goals[]');
-        objectives.appendChild(input);
+        goals.appendChild(input);
     }
 </script>
 <?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/categories/create.blade.php ENDPATH**/ ?>
