@@ -10,27 +10,35 @@
     <form action="<?php echo e(route('categories.store')); ?>" method="POST">
         <?php echo csrf_field(); ?>
 
-        <div class="mb-3">
-            <div class="mb-3">
+        <div class="mb-5">
+            <div class="mb-5">
                 <label for="name" class="form-label">Nome:</label>
-                <input type="text" autofocus id="name" name="name" class="form-control" value="<?php echo e(old('name')); ?>">
+                <input type="text" autofocus id="name" name="name" class="form-control" value="<?php echo e(old('name')); ?>" placeholder="nova categoria">
             </div>
 
             <div class="mb-3" id="goals">
                 <label for="goal" class="form-label">Objetivos:</label>
                 <?php if(old('goals')): ?>
                     <?php $__currentLoopData = old('goals'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $goal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <input type="text" class="form-control mb-2" name="goals[]" value="<?php echo e($goal); ?>">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" name="goals[]" value="<?php echo e($goal); ?>">
+                            <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
+                        </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php else: ?>
-                    <input type="text" class="form-control mb-2" name="goals[]">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="goals[]" placeholder="novo objetivo">
+                        <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
+                    </div>
                 <?php endif; ?>
             </div>
-            <button type="button" class="btn btn-primary mb-3" onclick="addGoals()">Adicionar objetivo</button>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="addField()">Adicionar objetivo</button>
+            </div>
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-            <a href="<?php echo e(route('categories.index')); ?>" class="btn btn-secondary mt-5">&#x2190; Voltar</a>
+            <a href="<?php echo e(route('categories.index')); ?>" class="btn btn-dark mt-5">Cancelar</a>
             <button type="submit" class="btn btn-primary mt-5">Salvar</button>
         </div>
     </form>
@@ -42,13 +50,32 @@
 <?php endif; ?>
 
 <script>
-    function addGoals() {
-        const goals = document.querySelector('#goals');
+    function addField() {
+        const fieldsList = document.querySelector('#goals');
+        const field = document.createElement('div');
+        field.classList.add('input-group', 'mb-2');
+        
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
-        input.setAttribute('class', 'form-control mb-2');
+        input.setAttribute('class', 'form-control');
         input.setAttribute('name', 'goals[]');
-        goals.appendChild(input);
+        input.setAttribute('placeholder', 'novo objetivo');
+        
+        const removeButton = document.createElement('button');
+        removeButton.setAttribute('type', 'button');
+        removeButton.setAttribute('class', 'btn btn-outline-danger');
+        removeButton.setAttribute('onclick', 'removeField(this)');
+        removeButton.innerHTML = 'X';
+        
+        field.appendChild(input);
+        field.appendChild(removeButton);
+        fieldsList.appendChild(field);
+    }
+    
+    function removeField(button) {
+        const field = button.parentNode;
+        const fieldsList = field.parentNode;
+        fieldsList.removeChild(field);
     }
 </script>
 <?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/categories/create.blade.php ENDPATH**/ ?>

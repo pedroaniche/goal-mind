@@ -11,7 +11,10 @@
 
 <body>
     <div class="container border-box">
-        <h1 class="mb-5"><?php echo e($title); ?></h1>
+        
+        <div class="d-flex justify-content-center">
+            <h1 class="mt-5 mb-5"><?php echo e($title); ?></h1>
+        </div>
 
         <?php if($errors->any()): ?>
             <div class="alert alert-danger">

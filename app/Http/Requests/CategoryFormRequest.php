@@ -19,15 +19,19 @@ class CategoryFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3']
+            'name' => ['required', 'min:3'],
+            'goals' => ['array'],
+            'goals.*' => ['required', 'min:3']
         ];
     }
 
     public function message()
     {
         return [
-            'name.required' => 'O campo nome é obrigatório',
-            'name.min' => 'O campo nome precisa de pelo menos :min caracteres'
+            'name.required' => 'O nome da categoria é obrigatório',
+            'name.min' => 'O nome da categoria precisa de pelo menos :min caracteres',
+            'goals.*.required' => 'Cada objetivo precisa ser preenchido',
+            'goals.*.min' => 'Cada objetivo precisa ter pelo menos :min caracteres'
         ];
     }
 }

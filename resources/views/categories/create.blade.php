@@ -2,39 +2,66 @@
     <form action="{{ route('categories.store') }}" method="POST">
         @csrf
 
-        <div class="mb-3">
-            <div class="mb-3">
+        <div class="mb-5">
+            <div class="mb-5">
                 <label for="name" class="form-label">Nome:</label>
-                <input type="text" autofocus id="name" name="name" class="form-control" value="{{ old('name') }}">
+                <input type="text" autofocus id="name" name="name" class="form-control" value="{{ old('name') }}" placeholder="nova categoria">
             </div>
 
             <div class="mb-3" id="goals">
                 <label for="goal" class="form-label">Objetivos:</label>
                 @if(old('goals'))
                     @foreach(old('goals') as $goal)
-                        <input type="text" class="form-control mb-2" name="goals[]" value="{{ $goal }}">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" name="goals[]" value="{{ $goal }}">
+                            <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
+                        </div>
                     @endforeach
                 @else
-                    <input type="text" class="form-control mb-2" name="goals[]">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" name="goals[]" placeholder="novo objetivo">
+                        <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
+                    </div>
                 @endif
             </div>
-            <button type="button" class="btn btn-primary mb-3" onclick="addGoals()">Adicionar objetivo</button>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="addField()">Adicionar objetivo</button>
+            </div>
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-            <a href="{{ route('categories.index') }}" class="btn btn-secondary mt-5">&#x2190; Voltar</a>
+            <a href="{{ route('categories.index') }}" class="btn btn-dark mt-5">Cancelar</a>
             <button type="submit" class="btn btn-primary mt-5">Salvar</button>
         </div>
     </form>
 </x-layout>
 
 <script>
-    function addGoals() {
-        const goals = document.querySelector('#goals');
+    function addField() {
+        const fieldsList = document.querySelector('#goals');
+        const field = document.createElement('div');
+        field.classList.add('input-group', 'mb-2');
+        
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
-        input.setAttribute('class', 'form-control mb-2');
+        input.setAttribute('class', 'form-control');
         input.setAttribute('name', 'goals[]');
-        goals.appendChild(input);
+        input.setAttribute('placeholder', 'novo objetivo');
+        
+        const removeButton = document.createElement('button');
+        removeButton.setAttribute('type', 'button');
+        removeButton.setAttribute('class', 'btn btn-outline-danger');
+        removeButton.setAttribute('onclick', 'removeField(this)');
+        removeButton.innerHTML = 'X';
+        
+        field.appendChild(input);
+        field.appendChild(removeButton);
+        fieldsList.appendChild(field);
+    }
+    
+    function removeField(button) {
+        const field = button.parentNode;
+        const fieldsList = field.parentNode;
+        fieldsList.removeChild(field);
     }
 </script>

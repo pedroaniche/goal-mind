@@ -19,15 +19,15 @@ class GoalFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:2']
+            'name' => ['required', 'min:3']
         ];
     }
 
     public function message()
     {
         return [
-            'name.required' => 'O campo nome é obrigatório',
-            'name.min' => 'O campo nome precisa de pelo menos :min caracteres'
+            'name.required' => 'O nome do objetivo é obrigatório',
+            'name.min' => 'O nome do objetivo precisa de pelo menos :min caracteres'
         ];
     }
     

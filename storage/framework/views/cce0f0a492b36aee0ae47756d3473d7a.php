@@ -17,8 +17,11 @@
     <ul class="list-group">
         <?php $__currentLoopData = $category->goals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $goal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <?php echo e($goal->name); ?>
+                
+                <a href="<?php echo e(route('categories.goals.tasks.index', [$category->id, $goal->id])); ?>" class="text-decoration-none text-dark">
+                    <?php echo e($goal->name); ?>
 
+                </a>
 
                 <span class="d-flex">
                     <a href="<?php echo e(route('categories.goals.edit', [$category->id, $goal->id])); ?>" class="btn btn-primary btn-sm">
