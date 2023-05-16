@@ -10,12 +10,6 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index(Category $category, Goal $goal)
-    {
-        $message = session('message.success');
-        return view('tasks.index', [$category->id, $goal->id])->with('category', $category)->with('goal', $goal)->with('message', $message);
-    }
-
     public function create(Category $category, Goal $goal)
     {
         return view('tasks.create')->with('category', $category)->with('goal', $goal);

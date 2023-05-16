@@ -19,7 +19,9 @@ class GoalFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3']
+            'name' => ['required', 'min:3', 'max:64'],
+            'tasks' => ['array'],
+            'tasks.*' => ['required', 'min:3', 'max:128']
         ];
     }
 
@@ -27,7 +29,11 @@ class GoalFormRequest extends FormRequest
     {
         return [
             'name.required' => 'O nome do objetivo é obrigatório',
-            'name.min' => 'O nome do objetivo precisa de pelo menos :min caracteres'
+            'name.min' => 'O nome do objetivo precisa de pelo menos :min caracteres',
+            'name.max' => 'O nome do objetivo pode ter no máximo :max caracteres',
+            'tasks.*.required' => 'Cada tarefa precisa ser preenchida',
+            'tasks.*.min' => 'Cada tarefa precisa ter pelo menos :min caracteres',
+            'tasks.*.max' => 'Cada tarefa pode ter no máximo :max caracteres'
         ];
     }
     

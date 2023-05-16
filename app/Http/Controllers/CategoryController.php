@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryFormRequest;
-use App\Http\Requests\GoalFormRequest;
 use App\Models\Category;
 use App\Models\Goal;
 
@@ -13,6 +12,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         $message = session('message.success');
+
         return view('categories.index')->with('categories', $categories)->with('message', $message);
     }
 
@@ -21,10 +21,11 @@ class CategoryController extends Controller
         return view('categories.create');
     }
 
-    public function store(CategoryFormRequest $requestCategory, GoalFormRequest $requestGoal)
+    public function store(CategoryFormRequest $request)
     {
-        $data = $requestCategory->all();
+        $data = $request->all();
         $category = Category::create($data);
+
         $goals = $data['goals'];
         $content = [];
         $now = now();
@@ -37,10 +38,18 @@ class CategoryController extends Controller
                 'updated_at' => $now
             ];
         }
+
         Goal::insert($content);
 
+        return to_route('categories.index')
+            ->with('message.success', "Categoria '{$category->name}' adicionada com sucesso!");
+    }
 
-        return to_route('categories.index')->with('message.success', "Categoria '{$category->name}' adicionada com sucesso!");
+    public function show(Category $category)
+    {
+        $message = session('message.success');
+
+        return view('categories.show')->with('category', $category)->with('message', $message);
     }
 
     public function edit(Category $category)
@@ -50,14 +59,35 @@ class CategoryController extends Controller
 
     public function update(CategoryFormRequest $request, Category $category)
     {
-        $category->fill($request->all());
+        $data = $request->all();
+        $category->fill($data);
         $category->save();
-        return to_route('categories.index')->with('message.success', "Categoria '{$category->name}' atualizada com sucesso!");
+
+        $goals = $data['goals'];
+        $content = [];
+        $now = now();
+
+        foreach ($goals as $goal) {
+            $content[] = [
+                'category_id' => $category->id,
+                'name' => $goal,
+                'created_at' => $now,
+                'updated_at' => $now
+            ];
+        }
+
+        $category->goals()->delete();
+        $category->goals()->insert($content);
+
+        return to_route('categories.index')
+            ->with('message.success', "Categoria '{$category->name}' atualizada com sucesso!");
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        return to_route('categories.index')->with('message.success', "Categoria '{$category->name}' removida com sucesso!");
+
+        return to_route('categories.index')
+            ->with('message.success', "Categoria '{$category->name}' removida com sucesso!");
     }
 }

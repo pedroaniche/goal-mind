@@ -19,9 +19,9 @@ class CategoryFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3'],
+            'name' => ['required', 'min:3', 'max:32'],
             'goals' => ['array'],
-            'goals.*' => ['required', 'min:3']
+            'goals.*' => ['required', 'min:3', 'max:64']
         ];
     }
 
@@ -30,8 +30,10 @@ class CategoryFormRequest extends FormRequest
         return [
             'name.required' => 'O nome da categoria é obrigatório',
             'name.min' => 'O nome da categoria precisa de pelo menos :min caracteres',
+            'name.max' => 'O nome da categoria pode ter no máximo :max caracteres',
             'goals.*.required' => 'Cada objetivo precisa ser preenchido',
-            'goals.*.min' => 'Cada objetivo precisa ter pelo menos :min caracteres'
+            'goals.*.min' => 'Cada objetivo precisa ter pelo menos :min caracteres',
+            'goals.*.max' => 'Cada objetivo pode ter no máximo :max caracteres'
         ];
     }
 }

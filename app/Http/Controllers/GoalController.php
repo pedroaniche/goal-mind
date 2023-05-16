@@ -9,12 +9,6 @@ use App\Models\Task;
 
 class GoalController extends Controller
 {
-    public function index(Category $category)
-    {
-        $message = session('message.success');
-        return view('goals.index')->with('category', $category)->with('message', $message);
-    }
-
     public function create(Category $category)
     {
         return view('goals.create')->with('category', $category);
@@ -22,23 +16,36 @@ class GoalController extends Controller
 
     public function store(GoalFormRequest $request, Category $category)
     {
-        $data = $request->all();      
+        $data = $request->all();
+        dd($data);
         $data['category_id'] = $category->id;
         $goal = Goal::create($data);
-        $tasks = $data['tasks'];
-        $content = [];
 
-        foreach ($tasks as $task) {
+        $tasks = $data['tasks'];
+        $checkedList = $data['checked'];
+        $content = [];
+        
+        foreach ($tasks as $index => $task) {
+            $checked = isset($checkedList[$index]) ? true : false;
             $content[] = [
                 'goal_id' => $goal->id,
                 'name' => $task,
-                'description'=> '',
-                'checked' => false
+                'checked' => $checked
             ];
         }
+
         Task::insert($content);
 
-        return to_route('categories.goals.index', $category->id)->with('message.success', "Objetivo '{$goal->name}' adicionado com sucesso!");
+        return to_route('categories.show', $category->id)
+            ->with('message.success', "Novo objetivo adicionado com sucesso!");
+    }
+
+    public function show(Category $category, Goal $goal)
+    {
+        $message = session('message.success');
+
+        return view('goals.show', [$category->id, $goal->id])
+            ->with('category', $category)->with('goal', $goal)->with('message', $message);
     }
 
     public function edit(Category $category, Goal $goal)
@@ -57,7 +64,7 @@ class GoalController extends Controller
     public function destroy(Category $category, Goal $goal)
     {
         $goal->delete();
-        return to_route('categories.goals.index', $category)
+        return to_route('categories.show', $category->id)
             ->with('message.success', "Objetivo '{$goal->name}' removido com sucesso!");
     }
 }
