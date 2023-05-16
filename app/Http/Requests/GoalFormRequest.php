@@ -20,7 +20,7 @@ class GoalFormRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:3', 'max:64'],
-            'tasks' => ['array'],
+            'tasks' => ['array', 'required'],
             'tasks.*' => ['required', 'min:3', 'max:128']
         ];
     }

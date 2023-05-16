@@ -11,21 +11,15 @@
             <div class="mb-3" id="tasks">
                 <label for="task" class="form-label">Tarefas:</label>
                 @if (old('tasks'))
-                    @foreach (old('tasks') as $index => $task)
+                    @foreach (old('tasks') as $task)
                         <div class="input-group mb-2">
-                            <div class="input-group-text">
-                                <input type="checkbox" name="checked[{{ $index }}]" value="1">
-                            </div>
                             <input type="text" class="form-control" name="tasks[]" placeholder="descrição da tarefa"
-                                value="{{ $task }}">
+                                value="{{ $task->name }}">
                             <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
                         </div>
                     @endforeach
                 @else
                     <div class="input-group mb-2">
-                        <div class="input-group-text">
-                            <input type="checkbox" name="checked[]" value="1">
-                        </div>
                         <input type="text" class="form-control" name="tasks[]" placeholder="descrição da tarefa">
                         <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
                     </div>
@@ -44,19 +38,13 @@
 </x-layout>
 
 <script>
+    let checkboxLsit = [];
+
     function addField() {
         const fieldDiv = document.querySelector('#tasks');
 
         const field = document.createElement('div');
         field.classList.add('input-group', 'mb-2');
-
-        const checkboxDiv = document.createElement('div');
-        checkboxDiv.classList.add('input-group-text');
-
-        const checkbox = document.createElement('input');
-        checkbox.setAttribute('type', 'checkbox');
-        checkbox.setAttribute('name', 'checked[]');
-        checkbox.setAttribute('value', '1');
 
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
@@ -70,8 +58,6 @@
         removeButton.setAttribute('onclick', 'removeField(this)');
         removeButton.innerHTML = 'X';
 
-        checkboxDiv.appendChild(checkbox);
-        field.appendChild(checkboxDiv);
         field.appendChild(input);
         field.appendChild(removeButton);
         fieldDiv.appendChild(field);
@@ -79,7 +65,7 @@
 
     function removeField(button) {
         const field = button.parentNode;
-        const fieldDiv = field.parentNode;
+        const fieldDiv = field.parentNode;        
         fieldDiv.removeChild(field);
     }
 </script>

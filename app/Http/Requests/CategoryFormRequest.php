@@ -19,13 +19,18 @@ class CategoryFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'min:3', 'max:32'],
-            'goals' => ['array'],
-            'goals.*' => ['required', 'min:3', 'max:64']
+            'name' => ['required', 'unique:categories,name', 'min:3', 'max:32'],
+            'goals' => ['array', 'required'],
+            'goals.*' => ['required', 'min:3', 'max:64'],
         ];
     }
 
-    public function message()
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function message(): array
     {
         return [
             'name.required' => 'O nome da categoria é obrigatório',
@@ -33,7 +38,7 @@ class CategoryFormRequest extends FormRequest
             'name.max' => 'O nome da categoria pode ter no máximo :max caracteres',
             'goals.*.required' => 'Cada objetivo precisa ser preenchido',
             'goals.*.min' => 'Cada objetivo precisa ter pelo menos :min caracteres',
-            'goals.*.max' => 'Cada objetivo pode ter no máximo :max caracteres'
+            'goals.*.max' => 'Cada objetivo pode ter no máximo :max caracteres',
         ];
     }
 }

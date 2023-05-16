@@ -12,8 +12,14 @@
         <?php echo method_field('PUT'); ?>
         <div class="mb-5">
             <div class="mb-5">
-                <label for="name" class="form-label">Nome:</label>
-                <input type="text" autofocus id="name" name="name" class="form-control" value="<?php echo e($category->name); ?>" placeholder="nova categoria">
+                <label for="name" class="form-label">Categoria:</label>
+                <?php if(old('name')): ?>
+                    <input type="text" autofocus id="name" name="name" class="form-control"
+                        value="<?php echo e(old('name')); ?>" placeholder="nome da categoria">
+                <?php else: ?>
+                    <input type="text" autofocus id="name" name="name" class="form-control"
+                        value="<?php echo e($category->name); ?>" placeholder="nome da categoria">
+                <?php endif; ?>
             </div>
 
             <div class="mb-3" id="goals">
@@ -21,19 +27,24 @@
                 <?php if(old('goals')): ?>
                     <?php $__currentLoopData = old('goals'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $goal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="input-group mb-2">
-                            <input type="text" class="form-control" name="goals[]" value="<?php echo e($goal); ?>">
+                            <input type="text" class="form-control" name="goals[]" value="<?php echo e($goal); ?>"
+                                placeholder="nome do objetivo">
                             <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php else: ?>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control" name="goals[]" placeholder="novo objetivo">
-                        <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
-                    </div>
+                    <?php $__currentLoopData = $category->goals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $goal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" name="goals[]" value="<?php echo e($goal->name); ?>"
+                                placeholder="nome do objetivo">
+                            <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
+                        </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <?php endif; ?>
             </div>
+
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary btn-sm" onclick="addField()">Adicionar objetivo</button>
+                <button type="button" class="btn btn-secondary" onclick="addField()">Adicionar objetivo</button>
             </div>
         </div>
 
@@ -54,27 +65,28 @@
         const fieldsList = document.querySelector('#goals');
         const field = document.createElement('div');
         field.classList.add('input-group', 'mb-2');
-        
+
         const input = document.createElement('input');
         input.setAttribute('type', 'text');
         input.setAttribute('class', 'form-control');
         input.setAttribute('name', 'goals[]');
-        input.setAttribute('placeholder', 'novo objetivo');
-        
+        input.setAttribute('placeholder', 'nome do objetivo');
+
         const removeButton = document.createElement('button');
         removeButton.setAttribute('type', 'button');
         removeButton.setAttribute('class', 'btn btn-outline-danger');
         removeButton.setAttribute('onclick', 'removeField(this)');
         removeButton.innerHTML = 'X';
-        
+
         field.appendChild(input);
         field.appendChild(removeButton);
         fieldsList.appendChild(field);
     }
-    
+
     function removeField(button) {
         const field = button.parentNode;
         const fieldsList = field.parentNode;
         fieldsList.removeChild(field);
     }
-</script><?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/categories/edit.blade.php ENDPATH**/ ?>
+</script>
+<?php /**PATH /Users/colaborador/Documents/goal-mind/resources/views/categories/edit.blade.php ENDPATH**/ ?>

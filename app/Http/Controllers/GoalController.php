@@ -17,20 +17,17 @@ class GoalController extends Controller
     public function store(GoalFormRequest $request, Category $category)
     {
         $data = $request->all();
-        dd($data);
         $data['category_id'] = $category->id;
         $goal = Goal::create($data);
 
         $tasks = $data['tasks'];
-        $checkedList = $data['checked'];
         $content = [];
-        
-        foreach ($tasks as $index => $task) {
-            $checked = isset($checkedList[$index]) ? true : false;
+
+        foreach ($tasks as $task) {
             $content[] = [
                 'goal_id' => $goal->id,
-                'name' => $task,
-                'checked' => $checked
+                'name' => $task['name'],
+                'checked' => $task['checked']
             ];
         }
 
@@ -55,15 +52,32 @@ class GoalController extends Controller
 
     public function update(GoalFormRequest $request, Category $category, Goal $goal)
     {
-        $goal->fill($request->all());
+        $data = $request->all();
+        $goal->fill($data);
         $goal->save();
-        return to_route('categories.goals.index', $category->id)
+
+        $tasks = $data['tasks'];
+        $content = [];
+
+        foreach ($tasks as $task) {
+            $content[] = [
+                'goal_id' => $goal->id,
+                'name' => $task,
+                'checked' => false
+            ];
+        }
+
+        $goal->tasks()->delete();
+        $goal->tasks()->insert($content);
+
+        return to_route('categories.show', $category->id)
             ->with('message.success', "Objetivo '{$goal->name}' atualizado com sucesso!");
     }
 
     public function destroy(Category $category, Goal $goal)
     {
         $goal->delete();
+
         return to_route('categories.show', $category->id)
             ->with('message.success', "Objetivo '{$goal->name}' removido com sucesso!");
     }

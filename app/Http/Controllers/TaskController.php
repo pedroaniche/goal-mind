@@ -10,30 +10,19 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function create(Category $category, Goal $goal)
-    {
-        return view('tasks.create')->with('category', $category)->with('goal', $goal);
-    }
-
-    public function store(TaskFormRequest $request, Category $category, Goal $goal)
-    {
-        $data = $request->all();
-        $data['goal_id'] = $goal->id;
-        $data['checked'] = false;
-        $task = Task::create($data);
-        return to_route('categories.goals.tasks.index', [$category->id, $goal->id])->with('message.success', "Tarefa '{$task->name}' adicionada com sucesso!");
-    }
-
-    public function update(Category $category, Goal $goal, Task $task, Request $request)
+    public function update(Request $request, Category $category, Goal $goal, Task $task)
     {
         $task->checked = $request->has('checked');
         $task->save();
-        return to_route('categories.goals.tasks.index', [$category->id, $goal->id]);
+
+        return to_route('categories.goals.show', [$category->id, $goal->id]);
     }
 
-    public function edit(){}
-    
-    public function show(){}
+    public function destroy(Category $category, Goal $goal, Task $task)
+    {
+        $task->delete();
 
-    public function destroy(){}
+        return to_route('categories.goals.show', [$category->id, $goal->id])
+            ->with('message.success', "Tarefa '{$task->name}' removida com sucesso!");
+    }
 }

@@ -14,16 +14,17 @@
         </div>
     <?php endif; ?>
 
-    <ul class="list-unstyled border-box" role="list">
+    <ul class="row list-unstyled border-box align-items-center" role="list">
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php if($loop->first || $loop->iteration % 4 === 1): ?>
                 <div class="row mt-3 d-flex flex-wrap align-items-center width-100 " role="group">
             <?php endif; ?>
 
-            <div class="col-md-3 mb-3" role="listitem">
+            <div class="col-3 mb-3" role="listitem">
                 <li class="border rounded p-3 text-center col-md-12 border-box">
 
-                    <a href="<?php echo e(route('categories.goals.index', $category->id)); ?>" class="text-decoration-none text-dark">
+                    <a href="<?php echo e(route('categories.show', $category->id)); ?>"
+                        class="text-decoration-none text-dark">
                         <?php echo e($category->name); ?>
 
                     </a>
