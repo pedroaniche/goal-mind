@@ -62,7 +62,7 @@ class GoalController extends Controller
         foreach ($tasks as $task) {
             $content[] = [
                 'goal_id' => $goal->id,
-                'name' => $task,
+                'description' => $task,
                 'checked' => false
             ];
         }

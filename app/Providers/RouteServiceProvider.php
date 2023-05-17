@@ -38,12 +38,6 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::resourceVerbs([
-            'categories' => 'categorias',
-            'category' => 'categoria',
-            'goals' => 'objetivos',
-            'goal' => 'objetivo',
-            'tasks' => 'tasks',
-            'task' => 'task',
             'index' => 'home',
             'create' => 'adicionar',
             'edit' => 'editar',

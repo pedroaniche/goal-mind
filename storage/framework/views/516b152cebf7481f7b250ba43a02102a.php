@@ -23,7 +23,7 @@
                     <?php $__currentLoopData = old('tasks'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" name="tasks[]" placeholder="descrição da tarefa"
-                                value="<?php echo e($task->name); ?>">
+                                value="<?php echo e($task->description); ?>">
                             <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -31,7 +31,7 @@
                     <?php $__currentLoopData = $goal->tasks; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" name="tasks[]" placeholder="descrição da tarefa"
-                                value="<?php echo e($task->name); ?>">
+                                value="<?php echo e($task->description); ?>">
                             <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -26,7 +26,7 @@
                     </form>
 
                     <div class="ms-3">
-                        <?php echo e($task->name); ?>
+                        <?php echo e($task->description); ?>
 
                     </div>
                 </div>

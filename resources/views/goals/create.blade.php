@@ -14,7 +14,7 @@
                     @foreach (old('tasks') as $task)
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" name="tasks[]" placeholder="descrição da tarefa"
-                                value="{{ $task->name }}">
+                                value="{{ $task }}">
                             <button type="button" class="btn btn-outline-danger" onclick="removeField(this)">X</button>
                         </div>
                     @endforeach

@@ -18,7 +18,7 @@
                     </form>
 
                     <div class="ms-3">
-                        {{ $task->name }}
+                        {{ $task->description }}
                     </div>
                 </div>
 
